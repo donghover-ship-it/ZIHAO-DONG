@@ -1,0 +1,101 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isVerified() {
+      return request.auth.token.email_verified == true;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Rules for competitorImages
+    match /users/{userId}/competitorImages/{imageId} {
+      function isValidCompetitorImage(data) {
+        return data.keys().hasAll(['userId', 'categoryId', 'data', 'createdAt', 'updatedAt']) &&
+               data.size() == 6 &&
+               data.userId == request.auth.uid &&
+               data.categoryId is string &&
+               data.categoryId.size() <= 50 &&
+               data.data is string &&
+               data.data.size() <= 1048576 && // 1MB max for base64
+               data.parsedData is map &&
+               data.createdAt is number &&
+               data.updatedAt is number;
+      }
+
+      allow read: if isOwner(userId);
+      allow list: if isOwner(userId);
+      
+      allow create: if isOwner(userId) &&
+                       isValidId(userId) &&
+                       isValidId(imageId) &&
+                       isValidCompetitorImage(incoming());
+
+      allow update: if isOwner(userId) &&
+                       isValidId(userId) &&
+                       isValidId(imageId) &&
+                       isValidCompetitorImage(incoming()) &&
+                       incoming().userId == existing().userId &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().diff(existing()).affectedKeys().hasOnly(['categoryId', 'data', 'parsedData', 'updatedAt']);
+
+      allow delete: if isOwner(userId) && isValidId(userId) && isValidId(imageId);
+    }
+
+    // Rules for structureImages
+    match /users/{userId}/structureImages/{imageId} {
+      function isValidStructureImage(data) {
+        return data.keys().hasAll(['userId', 'category', 'data', 'name', 'createdAt', 'updatedAt']) &&
+               data.size() == 6 &&
+               data.userId == request.auth.uid &&
+               data.category is string &&
+               data.category.size() <= 50 &&
+               data.name is string &&
+               data.name.size() <= 200 &&
+               data.data is string &&
+               data.data.size() <= 1048576 && // 1MB max for base64
+               data.createdAt is number &&
+               data.updatedAt is number;
+      }
+
+      allow read: if isOwner(userId);
+      allow list: if isOwner(userId);
+      
+      allow create: if isOwner(userId) &&
+                       isValidId(userId) &&
+                       isValidId(imageId) &&
+                       isValidStructureImage(incoming());
+
+      allow update: if isOwner(userId) &&
+                       isValidId(userId) &&
+                       isValidId(imageId) &&
+                       isValidStructureImage(incoming()) &&
+                       incoming().userId == existing().userId &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().diff(existing()).affectedKeys().hasOnly(['category', 'data', 'name', 'updatedAt']);
+
+      allow delete: if isOwner(userId) && isValidId(userId) && isValidId(imageId);
+    }
+  }
+}

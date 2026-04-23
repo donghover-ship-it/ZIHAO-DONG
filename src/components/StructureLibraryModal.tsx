@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Upload, Search, Image as ImageIcon, Trash2, Check } from 'lucide-react';
 import localforage from 'localforage';
+import { auth, fetchStructureLibraryFromCloud, syncStructureLibraryToCloud, deleteStructureImageFromCloud } from '../utils/firebaseUtils';
 import { useDesignStore } from '../store/useDesignStore';
 
 interface StructureLibraryModalProps {
@@ -34,7 +35,17 @@ export const StructureLibraryModal: React.FC<StructureLibraryModalProps> = ({
     if (isOpen) {
       const loadLibrary = async () => {
         try {
-          const stored = await localforage.getItem<Record<string, any[]>>('structureLibrary');
+          let stored = await localforage.getItem<Record<string, any[]>>('structureLibrary');
+          const user = auth.currentUser;
+          if (user) {
+            const cloudData = await fetchStructureLibraryFromCloud();
+            if (cloudData && Object.keys(cloudData).length > 0) {
+              stored = cloudData;
+              await localforage.setItem('structureLibrary', stored);
+            } else if (stored && Object.keys(stored).length > 0) {
+              await syncStructureLibraryToCloud(stored);
+            }
+          }
           if (stored) {
             setStructureLibrary(stored);
           } else {
@@ -59,6 +70,7 @@ export const StructureLibraryModal: React.FC<StructureLibraryModalProps> = ({
     setStructureLibrary(newLibrary);
     try {
       await localforage.setItem('structureLibrary', newLibrary);
+      if (auth.currentUser) await syncStructureLibraryToCloud(newLibrary);
     } catch (err) {
       console.error("Failed to save structure library:", err);
       alert("保存失败，可能是图片过大超出了存储限制。");
@@ -97,10 +109,14 @@ export const StructureLibraryModal: React.FC<StructureLibraryModalProps> = ({
         };
         
         // Save to localforage
-        localforage.setItem('structureLibrary', updatedLibrary).catch(err => {
-          console.error("Failed to save structure library:", err);
-          alert("保存失败，可能是图片过大超出了存储限制。");
-        });
+        localforage.setItem('structureLibrary', updatedLibrary)
+          .then(() => {
+            if (auth.currentUser) return syncStructureLibraryToCloud(updatedLibrary);
+          })
+          .catch(err => {
+            console.error("Failed to save structure library:", err);
+            alert("保存失败，可能是图片过大超出了存储限制。");
+          });
         
         return updatedLibrary;
       });
@@ -120,9 +136,13 @@ export const StructureLibraryModal: React.FC<StructureLibraryModalProps> = ({
         [activeTab]: currentItems.filter(item => item.id !== id)
       };
       
-      localforage.setItem('structureLibrary', updatedLibrary).catch(err => {
-        console.error("Failed to save structure library:", err);
-      });
+      localforage.setItem('structureLibrary', updatedLibrary)
+        .then(() => {
+          if (auth.currentUser) return deleteStructureImageFromCloud(id);
+        })
+        .catch(err => {
+          console.error("Failed to save structure library:", err);
+        });
       
       return updatedLibrary;
     });
