@@ -3,7 +3,6 @@ import { createPortal } from 'react-dom';
 import { Box, Upload, X, Tag, Edit2, Check, Sparkles, Loader2, Palette, Layers, ChevronDown, ChevronUp, Plus, Zap, AlertTriangle, RotateCcw, Search, BookOpen, RefreshCw } from 'lucide-react';
 import { useDesignStore } from '../store/useDesignStore';
 import localforage from 'localforage';
-import { auth, fetchCompetitorImagesFromCloud, syncCompetitorImagesToCloud, deleteCompetitorImageFromCloud } from '../utils/firebaseUtils';
 import { generateContentWithRetry } from '../utils/aiUtils';
 import Markdown from 'react-markdown';
 import { getTextureClass } from '../utils/textureUtils';
@@ -294,7 +293,6 @@ Return ONLY valid JSON without any markdown formatting.`;
 
     setCompetitorImages(updatedImages);
     await localforage.setItem('competitorImages', updatedImages);
-    if (auth.currentUser) await syncCompetitorImagesToCloud(updatedImages);
     setIsUpgradingImages(false);
   };
 
@@ -416,18 +414,7 @@ ${prompts}`;
   useEffect(() => {
     const loadStoredData = async () => {
       try {
-        let stored = await localforage.getItem<any>('competitorImages');
-        const user = auth.currentUser;
-        if (user) {
-          const cloudData = await fetchCompetitorImagesFromCloud();
-          if (cloudData && Object.keys(cloudData).length > 0) {
-            stored = cloudData;
-            await localforage.setItem('competitorImages', stored);
-          } else if (stored && Object.keys(stored).length > 0) {
-            await syncCompetitorImagesToCloud(stored);
-          }
-        }
-        
+        const stored = await localforage.getItem<any>('competitorImages');
         if (stored) {
           if (Array.isArray(stored)) {
             // Migrate old flat array to the first category
@@ -572,7 +559,6 @@ ${prompts}`;
     const updatedImages = { ...competitorImages, [categoryId]: updatedCategoryImages };
     setCompetitorImages(updatedImages);
     await localforage.setItem('competitorImages', updatedImages);
-    if (auth.currentUser) await syncCompetitorImagesToCloud(updatedImages);
   };
 
   const onCompetitorImagesChange = async (categoryId: string, e: React.ChangeEvent<HTMLInputElement>, isSmart: boolean = false) => {
@@ -703,7 +689,6 @@ Return ONLY valid JSON without any markdown formatting.`
     
     setCompetitorImages(updatedImages);
     await localforage.setItem('competitorImages', updatedImages);
-    if (auth.currentUser) await syncCompetitorImagesToCloud(updatedImages);
     
     const forStore: Record<string, string[]> = {};
     Object.keys(updatedImages).forEach(key => {
@@ -724,7 +709,6 @@ Return ONLY valid JSON without any markdown formatting.`
     
     setCompetitorImages(updatedImages);
     await localforage.setItem('competitorImages', updatedImages);
-    if (auth.currentUser) await deleteCompetitorImageFromCloud(id);
     
     const forStore: Record<string, string[]> = {};
     Object.keys(updatedImages).forEach(key => {
@@ -766,7 +750,6 @@ Return ONLY valid JSON without any markdown formatting.`
     
     setCompetitorImages(updatedImages);
     await localforage.setItem('competitorImages', updatedImages);
-    if (auth.currentUser) await syncCompetitorImagesToCloud(updatedImages);
     
     const forStore: Record<string, string[]> = {};
     Object.keys(updatedImages).forEach(key => {

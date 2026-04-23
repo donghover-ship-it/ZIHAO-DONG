@@ -18,15 +18,11 @@ import {
   Settings,
   HelpCircle,
   ChevronRight,
-  Sparkles,
-  LogIn,
-  LogOut,
-  Cloud
+  Sparkles
 } from 'lucide-react';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { BackgroundMeteor } from './components/BackgroundMeteor';
 import { STYLE_CATEGORIES } from './modules/CompetitorLibrary';
-import { auth, loginWithGoogle, logout } from './utils/firebaseUtils';
 
 const SidebarItem = ({ 
   id, 
@@ -68,14 +64,6 @@ export default function App() {
   const selectedCategories = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
   const [isCmfExpanded, setIsCmfExpanded] = React.useState(true);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
-  const [currentUser, setCurrentUser] = React.useState(auth.currentUser);
-
-  React.useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
-    });
-    return unsubscribe;
-  }, []);
 
   React.useEffect(() => {
     // Globally load unpersisted large data from IndexedDB on app startup
@@ -243,27 +231,6 @@ export default function App() {
         </nav>
 
         <div className="p-4 space-y-2 bg-transparent relative z-10 w-[260px]">
-          {currentUser ? (
-            <button onClick={logout} className="w-full flex items-center gap-4 px-5 py-3.5 rounded-2xl text-slate-400 border border-white/5 hover:border-white/10 hover:text-white hover:bg-white/5 transition-all text-sm font-medium relative group">
-              <Cloud size={20} className="text-emerald-400" />
-              <div className="flex flex-col items-start leading-tight">
-                <span>云端已连接</span>
-                <span className="text-[10px] text-slate-500 truncate max-w-[120px]">{currentUser.email}</span>
-              </div>
-              <div className="absolute right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                <LogOut size={16} className="text-red-400" />
-              </div>
-            </button>
-          ) : (
-            <button onClick={loginWithGoogle} className="w-full flex items-center gap-4 px-5 py-3.5 rounded-2xl text-blue-400 border border-blue-500/20 hover:border-blue-500/40 hover:text-blue-300 hover:bg-blue-500/10 transition-all text-sm font-medium">
-              <LogIn size={20} />
-              <div className="flex flex-col items-start leading-tight">
-                <span>云端同步登录</span>
-                <span className="text-[10px] text-blue-400/60">跨设备同步你的资料库</span>
-              </div>
-            </button>
-          )}
-
           <button className="w-full flex items-center gap-4 px-5 py-3.5 rounded-2xl text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">
             <Settings size={20} />
             设置
