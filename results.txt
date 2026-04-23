@@ -1,0 +1,39 @@
+node_modules/@protobufjs/fetch/tests/index.js:var fetch = require("..");
+node_modules/formdata-polyfill/FormData.js:  const _fetch = global.Request && global.fetch
+node_modules/formdata-polyfill/FormData.js:    global.fetch = function (input, init) {
+node_modules/gaxios/build/cjs/src/gaxios.js:     * const myFetch: typeof fetch = (...args) => gaxios.fetch(...args);
+node_modules/gaxios/build/esm/src/gaxios.js:     * const myFetch: typeof fetch = (...args) => gaxios.fetch(...args);
+node_modules/google-auth-library/build/src/auth/authclient.js:     * const fetchWithAuthClient: typeof fetch = (...args) => authClient.fetch(...args);
+node_modules/google-auth-library/build/src/auth/googleauth.js:     * const fetchWithAuth: typeof fetch = (...args) => auth.fetch(...args);
+node_modules/hls.js/dist/hls.js:          this.hls.config.startFragPrefetch = true;
+node_modules/hls.js/dist/hls.light.js:          this.hls.config.startFragPrefetch = true;
+node_modules/protobufjs/src/root.js:Root.prototype.fetch = util.fetch;
+node_modules/protobufjs/dist/light/protobuf.js:Root.prototype.fetch = util.fetch;
+node_modules/protobufjs/dist/protobuf.js:Root.prototype.fetch = util.fetch;
+node_modules/three/examples/jsm/libs/lottie_canvas.module.js:  var fetch = null;
+node_modules/three/build/three.core.js:		if ( typeof fetch === 'undefined' ) {
+node_modules/three/src/loaders/ImageBitmapLoader.js:		if ( typeof fetch === 'undefined' ) {
+node_modules/troika-three-text/find-google-font-url.js:const fetch = require('node-fetch')
+node_modules/troika-worker-utils/__tests__/_jsdom-worker.js:  global.fetch = function(url, opts) {
+node_modules/localforage/src/utils/isIndexedDBValid.js:            typeof fetch === 'function' &&
+node_modules/localforage/dist/localforage.js:        var hasFetch = typeof fetch === 'function' && fetch.toString().indexOf('[native code') !== -1;
+node_modules/localforage/dist/localforage.nopromises.js:        var hasFetch = typeof fetch === 'function' && fetch.toString().indexOf('[native code') !== -1;
+node_modules/path-scurry/node_modules/lru-cache/dist/commonjs/index.js:                status.fetch = 'get';
+node_modules/path-scurry/node_modules/lru-cache/dist/commonjs/index.js:                status.fetch = 'miss';
+node_modules/path-scurry/node_modules/lru-cache/dist/commonjs/index.js:                    status.fetch = 'inflight';
+node_modules/path-scurry/node_modules/lru-cache/dist/commonjs/index.js:                    status.fetch = 'hit';
+node_modules/path-scurry/node_modules/lru-cache/dist/commonjs/index.js:                status.fetch = isStale ? 'stale' : 'refresh';
+node_modules/path-scurry/node_modules/lru-cache/dist/esm/index.js:                status.fetch = 'get';
+node_modules/path-scurry/node_modules/lru-cache/dist/esm/index.js:                status.fetch = 'miss';
+node_modules/path-scurry/node_modules/lru-cache/dist/esm/index.js:                    status.fetch = 'inflight';
+node_modules/path-scurry/node_modules/lru-cache/dist/esm/index.js:                    status.fetch = 'hit';
+node_modules/path-scurry/node_modules/lru-cache/dist/esm/index.js:                status.fetch = isStale ? 'stale' : 'refresh';
+node_modules/stats-gl/node_modules/three/examples/jsm/libs/lottie_canvas.module.js:  var fetch = null;
+node_modules/stats-gl/node_modules/three/build/three.module.js:		if ( typeof fetch === 'undefined' ) {
+node_modules/stats-gl/node_modules/three/build/three.webgpu.js:		if ( typeof fetch === 'undefined' ) {
+node_modules/stats-gl/node_modules/three/build/three.webgpu.nodes.js:		if ( typeof fetch === 'undefined' ) {
+node_modules/stats-gl/node_modules/three/src/loaders/ImageBitmapLoader.js:		if ( typeof fetch === 'undefined' ) {
+node_modules/three-stdlib/libs/lottie.js:    var fetch = null;
+node_modules/.vite/deps/@google_genai.js:  throw new Error("`fetch` is not defined as a global; Either pass `fetch` to the client, `new GeminiNextGenAPIClient({ fetch })` or polyfill the global, `globalThis.fetch = fetch`");
+node_modules/.vite/deps/@google_genai.js:    this.fetch = (_j = options.fetch) !== null && _j !== void 0 ? _j : getDefaultFetch();
+node_modules/.vite/deps/localforage.js:            var hasFetch = typeof fetch === "function" && fetch.toString().indexOf("[native code") !== -1;

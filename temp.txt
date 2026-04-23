@@ -1,0 +1,50 @@
+const NEGATIVE_ANATOMY_PROMPT = `(diagrams:2.0), (infographics:2.0), (annotations:2.0), (labels:2.0), (arrows:2.0), (callout lines:2.0), (pointers:2.0), (text descriptions:2.0), dimensions, measurements, (logos:2.0), (brand marks:2.0), (text:2.0), (watermarks:2.0), letters, words, typography, symbols, emblems, badges, trademark, copyright, other brands, competitor logos, any brand logo, (three shoulder straps:2.0), (extra straps:1.8), (multiple handles:1.5), floating straps, illogical anatomy, mutated parts, physically impossible geometry, extra limbs, extra buckles, detached straps, straps attached to the front, deformed bag shape, asymmetrical body, chaotic strap arrangement, weird bag shape, `;
+  const selectedCategories = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+  const fusionAnalysis = designData.competitor?.fusionAnalysis;
+  const isAnalyzingFusion = designData.competitor?.isAnalyzingFusion;
+    updateDesignData('competitor', { ...designData.competitor, styleCategories: categories, isAnalyzingFusion: true, fusionAnalysis: '' });
+    const customDesc1 = designData.competitor?.customDescriptions?.[cat1.id] || cat1.description;
+    const customDesc2 = designData.competitor?.customDescriptions?.[cat2.id] || cat2.description;
+      updateDesignData('competitor', { 
+        ...designData.competitor, 
+      updateDesignData('competitor', { 
+        ...designData.competitor, 
+      updateDesignData('competitor', { ...designData.competitor, styleCategories: newCategories, fusionAnalysis: '', isAnalyzingFusion: false });
+    const currentCategories = designData.competitor?.styleCategories || [];
+  }, [designData.competitor?.styleCategories, definitionResult]);
+      const selectedCategoriesForPrompt = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+            const selectedCategoriesForGen = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+            const selectedCategoriesForGen = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+    const overrides = designData.competitor?.colorOverrides?.[categoryId];
+    const currentColorsSource = JSON.stringify(designData.competitor?.colorOverrides) + '|' + JSON.stringify(definitionResult?.specifications?.pantoneColors) + '|' + (designData.competitor?.styleCategories?.join(',') || '');
+    const selectedCategories = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+  }, [designData.competitor?.styleCategories, designData.competitor?.styleCategory, designData.competitor?.colorOverrides, definitionResult?.specifications?.pantoneColors, definitionResult?.specifications?.colors]);
+  const [referenceImages, setReferenceImages] = useState<{url: string, type: 'appearance' | 'competitor'}[]>(
+      ...(Array.isArray(designData.appearance?.competitorImageUrl) ? designData.appearance.competitorImageUrl.map(url => ({url, type: 'competitor' as const})) : [])
+      ...(Array.isArray(designData.appearance?.competitorImageUrl) ? designData.appearance.competitorImageUrl.map(url => ({url, type: 'competitor' as const})) : [])
+  }, [designData.appearance?.imageUrl, designData.appearance?.competitorImageUrl]);
+    const selectedCategories = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+  }, [definitionResult, benchmarkColorString, globalAttributes.color, designData.competitor?.styleCategories, designData.competitor?.styleCategory]);
+    const selectedCategories = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+  }, [definitionResult, selectedMaterialNames, benchmarkColorString, globalAttributes.color, designData.competitor?.styleCategories, designData.competitor?.styleCategory]);
+            const selectedCategoriesForGen = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+        ${definitionResult ? `Product Name: ${definitionResult?.specifications?.name || ''}. Style: ${((designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : [])).map(id => STYLE_CATEGORIES.find(c => c.id === id)?.name).filter(Boolean).join(', ')) || (definitionResult?.designConcept || []).join(', ')}.` : ''}
+          const selectedCategoriesForGen = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+      // Get competitor images from the selected categories ONLY IF no specific images were checked
+      const competitorImagesRecord = designData.competitor?.competitorImages || {};
+      const selectedCategories = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+      if (designData.appearance?.competitorImageUrl && designData.appearance.competitorImageUrl.length > 0) {
+        definitionCompetitorImages = [...designData.appearance.competitorImageUrl];
+            if (competitorImagesRecord[cat]) {
+              definitionCompetitorImages = [...definitionCompetitorImages, ...competitorImagesRecord[cat]];
+          definitionCompetitorImages = Object.values(competitorImagesRecord).flat();
+      // Also include legacy definition competitor images if they exist
+      if (designData.definition?.competitorImages) {
+        definitionCompetitorImages = [...definitionCompetitorImages, ...designData.definition.competitorImages];
+      const selectedCategoriesForGen = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+      const selectedCategoriesForGen = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+                const selectedCategories = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+                        const selectedCategories = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+                            const selectedCategories = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+                          const selectedCategories = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);
+                          const selectedCategories = designData.competitor?.styleCategories || (designData.competitor?.styleCategory ? [designData.competitor.styleCategory] : []);

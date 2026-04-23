@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#030306" />
+    <title>My Google AI Studio App</title>
+    <script>
+      // Fix for fetch being a getter and some libraries trying to set it
+      (function() {
+        try {
+          var _fetch = window.fetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() { return _fetch; },
+            set: function(v) { _fetch = v; },
+            configurable: true,
+            enumerable: true
+          });
+          
+          // Also handle Window prototype if it's defined there
+          if (window.Window && Window.prototype && Window.prototype.hasOwnProperty('fetch')) {
+            Object.defineProperty(Window.prototype, 'fetch', {
+              get: function() { return _fetch; },
+              set: function(v) { _fetch = v; },
+              configurable: true,
+              enumerable: true
+            });
+          }
+        } catch (e) {
+          console.warn('Could not make fetch writable:', e);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden;"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
